@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic; // List<T> ve SortedList<TKey, TValue> için şarttır!
+using System.Collections.Generic; // List, SortedList ve Dictionary için şarttır!
 
 namespace CSharpListNotu
 {
@@ -16,7 +16,6 @@ namespace CSharpListNotu
             rakamlar.Add(2);
             rakamlar.Add(3);
             rakamlar.Add(5);
-            // rakamlar.Add("Ceren"); -> DERLEME HATASI! int listesine string atamazsın, korur.
 
             // Tanımlarken doğrudan eleman ekleme (Collection Initializer)
             List<string> sehirler = new List<string>() { "İzmir", "Aydın", "İstanbul" };
@@ -26,7 +25,7 @@ namespace CSharpListNotu
             sehirler.AddRange(yeniSehirler); // Bir diziyi listenin sonuna topluca ekler
 
             // 3. ARAYA ELEMAN SIKIŞTIRMA (Insert)
-            sehirler.Insert(1, "Turgutlu"); // 1. indekse (2. sıraya) bu veriyi ekler, diğerlerini kaydırır.
+            sehirler.Insert(1, "Turgutlu"); // 1. indekse bu veriyi ekler, diğerlerini kaydırır.
 
             // 4. ELEMAN SİLME VE KONTROL (Remove / RemoveAt / Contains)
             sehirler.Remove("İstanbul"); // Değere göre bulup ilk eşleşeni siler
@@ -36,7 +35,6 @@ namespace CSharpListNotu
             bool varMi = sehirler.Contains("Aydın"); // Varsa true döner
             
             // HAP BİLGİ 2: Listelerin eleman sayısını öğrenmek için ".Count" özelliği kullanılır.
-            // Ayrıca döngü haricinde ".ForEach()" metoduyla da hızlıca ekrana yazdırılabilir.
             Console.WriteLine($"Toplam Şehir Sayısı: {sehirler.Count}");
 
             // Listeye özel hızlı döngü yapısı (Lambda Expression)
@@ -44,22 +42,36 @@ namespace CSharpListNotu
 
 
             // ============================================================
-            // 2. GENERIC SORTEDLIST<TKey, TValue> (ÖZET KISA NOT)
+            // 2. GENERIC SORTEDLIST<TKey, TValue> (OTOMATİK SIRALI SÖZLÜK)
             // ============================================================
-            // HAP BİLGİ 3: Verileri "Anahtar-Değer" (Key-Value) çifti olarak tutar.
-            // Sen karışık eklesen bile Key alanına göre listeyi OTOMATİK SIRALAR (1, 2, 3...).
-            // KURAL: Key'ler benzersiz (unique) olmalı ve null olamaz! Value'lar tekrar edebilir.
+            // HAP BİLGİ 3: Verileri Anahtar-Değer (Key-Value) çifti olarak tutar.
+            // Sen karışık eklesen bile Key alanına göre listeyi arka planda OTOMATİK SIRALAR (1, 2, 3...).
+            // KURAL: Key'ler benzersiz (unique) olmalı ve null olamaz!
             SortedList<int, string> ogrenciler = new SortedList<int, string>();
             ogrenciler.Add(3, "Selinay");
             ogrenciler.Add(1, "Ceren"); // Otomatik olarak en başa taşınır
             ogrenciler.Add(2, "Rabia");
 
-            // Kısa Kullanım Özetleri:
-            bool keyVarMi = ogrenciler.ContainsKey(2); // 2 numaralı key var mı? (Güvenlik için)
-            ogrenciler.Remove(1); // Key'i 1 olan elemanı (Ceren) doğrudan siler.
+            ogrenciler.Remove(1); // Key'i 1 olan elemanı doğrudan siler.
 
-            // HAP BİLGİ 4 (MÜLAKAT): Arama (retrieval) hızı çok iyidir. Ancak her ekleme/silmede 
-            // listeyi baştan sıraladığı için yazma operasyonları List<T>'ye göre daha yavaştır.
+
+            // ============================================================
+            // 3. GENERIC DICTIONARY<TKey, TValue> (HIZLI / SIRASIZ SÖZLÜK)
+            // ============================================================
+            // HAP BİLGİ 4: Tıpkı SortedList gibi Key-Value mantığıyla çalışır ama verileri SIRASIZ tutar.
+            // Sıralama zahmetine girmediği için eleman ekleme ve silme hızı SortedList'ten ÇOK DAHA YÜKSEKTİR.
+            Dictionary<string, string> sozluk = new Dictionary<string, string>();
+            sozluk.Add("Apple", "Elma");
+            sozluk.Add("Car", "Araba");
+
+            // Güvenli veri okuma ve güncelleme:
+            if (sozluk.ContainsKey("Apple"))
+            {
+                Console.WriteLine($"Anlamı: {sozluk["Apple"]}"); // Doğrudan Key ile çağırdık
+            }
+            sozluk["Apple"] = "Kırmızı Elma"; // Değer güncelleme (Indexer)
+
+            sozluk.Remove("Car"); // Key'e göre siler
         }
     }
 }
