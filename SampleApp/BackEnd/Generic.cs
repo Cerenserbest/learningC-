@@ -1,4 +1,6 @@
 using System;
+using System.Collections; // Non-generic koleksiyonlar (ArrayList) için gerekli
+using System.Collections.Generic; // Generic koleksiyonlar (List) için gerekli
 
 namespace CSharpGenericsNotu
 {
@@ -53,6 +55,23 @@ namespace CSharpGenericsNotu
             
             printer.Print<int>(100);       // T yerine int geçer
             printer.Print<string>("Hello");// T yerine string geçer
+
+
+            // ============================================================
+            // YENİ EKLEME: NON-GENERIC VS GENERIC COLLECTIONS
+            // ============================================================
+
+            // A) Non-generic: İçine her veri tipini karışık alabilir (YAVAŞTIR)
+            ArrayList nonGenericListe = new ArrayList();
+            nonGenericListe.Add(100);       // int ekledik
+            nonGenericListe.Add("Ceren");   // string ekledik
+            nonGenericListe.Add(true);      // bool ekledik
+
+            // B) Generic: Sadece tanımlanan veri tipini alabilir (ÇOK HIZLIDIR ve GÜVENLİDİR)
+            List<string> genericListe = new List<string>();
+            genericListe.Add("İzmir");
+            genericListe.Add("Aydın");
+            // genericListe.Add(123); -> HATA! Sadece string ekleyebilirsin, derleyici seni korur.
         }
     }
 }
