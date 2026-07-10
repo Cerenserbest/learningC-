@@ -1,4 +1,5 @@
 using System;
+using System.Collections; // YENİ: Non-generic Hashtable kullanabilmek için şart!
 using System.Collections.Generic; // List, SortedList ve Dictionary için şarttır!
 
 namespace CSharpListNotu
@@ -72,6 +73,22 @@ namespace CSharpListNotu
             sozluk["Apple"] = "Kırmızı Elma"; // Değer güncelleme (Indexer)
 
             sozluk.Remove("Car"); // Key'e göre siler
+
+
+            // ============================================================
+            // 4. YENİ EKLEME: NON-GENERIC HASHTABLE (KARIŞIK / SIRASIZ SÖZLÜK)
+            // ============================================================
+            // HAP BİLGİ 5: Dictionary yapısının eski nesil (Non-generic) halidir. Key-Value mantığıyla çalışır.
+            // EN BÜYÜK FARKI: Key ve Value kısımlarına her veri tipini (int, string, bool) KARIŞIK ekleyebilirsin.
+            // DEZAVANTAJI: Veriyi okurken açıkça tip dönüşümü (Type Cast) yapmak zorundasın ve yavaştır. Modern C#'ta Dictionary tercih edilir.
+            Hashtable ht = new Hashtable();
+            ht.Add(1, "One");
+            ht.Add("UK", "London");
+
+            // Veri Okuma Örneği (Explicit Casting Şarttır!)
+            string ukSehir = (string)ht["UK"]; 
+
+            ht.Remove("UK"); // Key'e göre siler
         }
     }
 }
